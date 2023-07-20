@@ -26,6 +26,10 @@ java {
   sourceCompatibility = JavaVersion.VERSION_11
 }
 
+dependencies {
+  testImplementation(kotlin("test"))
+}
+
 // Configure Gradle IntelliJ Plugin - read more: https://github.com/JetBrains/gradle-intellij-plugin
 intellij {
     pluginName.set(properties("pluginName"))
@@ -78,5 +82,9 @@ tasks {
         dependsOn("patchChangelog")
         token.set(System.getenv("PUBLISH_TOKEN"))
         channels.set(listOf("default"))
+    }
+
+    test {
+      useJUnitPlatform()
     }
 }
