@@ -31,6 +31,7 @@ kotlin {
 }
 
 dependencies {
+  implementation("com.catppuccin:catppuccin-palette:1.0.0")
   testImplementation(kotlin("test"))
 }
 
