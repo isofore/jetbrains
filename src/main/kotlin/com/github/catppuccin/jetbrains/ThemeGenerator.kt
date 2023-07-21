@@ -2,22 +2,11 @@ package com.github.catppuccin.jetbrains
 
 import com.catppuccin.Flavour
 import com.catppuccin.Palette
-import com.fasterxml.jackson.databind.ObjectMapper
 import java.awt.Color
-import java.io.File
-import java.nio.file.Files
-import java.nio.file.Path
 
-class ThemeGenerator(private val themesDirPath: String = "src/main/resources/themes") {
-  private val objectMapper = ObjectMapper()
-
-  fun writeThemes() {
-    val themesDirectory = ensureThemesDirectoryExists()
-    val themes = generateThemes()
-    themes.forEach { (key, theme) ->
-      val themeFile = File(themesDirectory, "$key.theme.json")
-      objectMapper.writeValue(themeFile, theme)
-    }
+class ThemeGenerator(private val fileWriter: FileWriter = DefaultFileWriter("src/main/resources/themes")) {
+  fun writeThemes(themes: List<JBTheme> = generateThemes()) = themes.forEach { (key, theme) ->
+    fileWriter.write("$key.theme.json", theme)
   }
 
   fun generateThemes(flavours: List<Flavour> = Palette.toList()): List<JBTheme> =
@@ -443,12 +432,4 @@ class ThemeGenerator(private val themesDirPath: String = "src/main/resources/the
 
   private fun Color.toHex(): String =
     String.format("#%02X%02X%02X", this.red, this.green, blue)
-
-  private fun ensureThemesDirectoryExists(): File {
-    Files.createDirectories(Path.of(themesDirPath))
-    val themesDirectory = File(themesDirPath)
-    require(File(themesDirPath).exists())
-    require(File(themesDirPath).isDirectory)
-    return themesDirectory
-  }
 }
