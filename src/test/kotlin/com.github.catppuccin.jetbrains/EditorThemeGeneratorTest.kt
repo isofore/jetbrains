@@ -7,7 +7,8 @@ import kotlin.test.assertEquals
 
 class EditorThemeGeneratorTest {
   private val writer = FakeFileWriter()
-  private val themeGenerator = EditorThemeGenerator(writer)
+  private val options = ThemeOptions(Palette.FRAPPE.mauve)
+  private val themeGenerator = EditorThemeGenerator(options, writer)
 
   private val frappeTheme = writer.readResource("/themes/frappe.xml")
   private val frappeThemeNoItalics =

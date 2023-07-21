@@ -8,9 +8,10 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
-class ThemeGeneratorTest {
+class MainThemeGeneratorTest {
   private val writer = FakeFileWriter()
-  private val themeGenerator = ThemeGenerator(writer)
+  private val options = ThemeOptions(Palette.FRAPPE.mauve)
+  private val themeGenerator = MainThemeGenerator(options, writer)
   private val objectMapper = ObjectMapper().registerModule(KotlinModule())
 
   @BeforeEach

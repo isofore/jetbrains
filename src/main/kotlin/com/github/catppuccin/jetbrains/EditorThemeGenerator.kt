@@ -8,7 +8,10 @@ import com.github.jknack.handlebars.Template
 import com.github.jknack.handlebars.io.ClassPathTemplateLoader
 import java.awt.Color
 
-class EditorThemeGenerator(private val fileWriter: FileWriter = DefaultFileWriter("src/main/resources/themes")) {
+class EditorThemeGenerator(
+  override val options: ThemeOptions,
+  private val fileWriter: FileWriter = DefaultFileWriter("src/main/resources/themes")
+) : ThemeGenerator<EditorThemeContext> {
   private val template: Template
 
   init {
@@ -21,8 +24,8 @@ class EditorThemeGenerator(private val fileWriter: FileWriter = DefaultFileWrite
     }.compile("template")
   }
 
-  fun write(contexts: List<EditorThemeContext> = generate()) =
-    contexts.forEach { context ->
+  override fun write(generateResult: List<EditorThemeContext>) =
+    generateResult.forEach { context ->
       val output = template.apply(context)
 
       val suffix = if (context.italics) "" else "-no-italics"
@@ -30,7 +33,7 @@ class EditorThemeGenerator(private val fileWriter: FileWriter = DefaultFileWrite
       fileWriter.write(fileName, output)
     }
 
-  fun generate(flavours: List<Flavour> = Palette.toList()): List<EditorThemeContext> =
+  override fun generate(flavours: List<Flavour>): List<EditorThemeContext> =
     flavours.cartesianProduct(listOf(true, false)).map { (flavour, italics) ->
       val isLatte = flavour == Palette.LATTE
 
