@@ -5,11 +5,11 @@ import com.catppuccin.Palette
 import java.awt.Color
 
 class ThemeGenerator(private val fileWriter: FileWriter = DefaultFileWriter("src/main/resources/themes")) {
-  fun writeThemes(themes: List<JBTheme> = generateThemes()) = themes.forEach { (key, theme) ->
+  fun write(themes: List<JBTheme> = generate()) = themes.forEach { (key, theme) ->
     fileWriter.write("$key.theme.json", theme)
   }
 
-  fun generateThemes(flavours: List<Flavour> = Palette.toList()): List<JBTheme> =
+  fun generate(flavours: List<Flavour> = Palette.toList()): List<JBTheme> =
     flavours.map(::toTheme)
 
   fun toTheme(flavour: Flavour): JBTheme {
@@ -429,7 +429,4 @@ class ThemeGenerator(private val fileWriter: FileWriter = DefaultFileWriter("src
 
   private fun opacity(base: Color, color: Color, amount: Float): Color =
     mixColors(color, base, amount)
-
-  private fun Color.toHex(): String =
-    String.format("#%02X%02X%02X", this.red, this.green, blue)
 }

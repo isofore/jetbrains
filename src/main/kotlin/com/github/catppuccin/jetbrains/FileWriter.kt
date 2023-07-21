@@ -6,6 +6,7 @@ import java.nio.file.Files
 import java.nio.file.Path
 
 interface FileWriter {
+  fun write(name: String, text: String): File
   fun write(name: String, data: Any): File
 }
 
@@ -23,6 +24,11 @@ class DefaultFileWriter(private val dirPath: String) : FileWriter {
       objectMapper.writeValue(file, data)
       file
     }
+
+  override fun write(name: String, text: String): File = File(dirPath, name).let { file ->
+    file.writeText(text)
+    file
+  }
 
   private fun ensureParentDirExists(): File {
     Files.createDirectories(Path.of(dirPath))

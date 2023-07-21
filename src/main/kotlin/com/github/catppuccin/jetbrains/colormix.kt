@@ -10,3 +10,6 @@ fun mixColors(color1: Color, color2: Color, amount: Float = 0.5f): Color {
     .map { (x, y) -> x * amount + (y * (1 - amount)) }
     .let { Color(it[0], it[1], it[2]) }
 }
+
+fun Color.toHex(): String =
+  String.format("#%02X%02X%02X", this.red, this.green, blue)

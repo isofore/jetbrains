@@ -32,6 +32,7 @@ kotlin {
 
 dependencies {
   implementation("com.catppuccin:catppuccin-palette:1.0.0")
+  implementation("com.github.jknack:handlebars:4.3.1")
   testImplementation(kotlin("test"))
 }
 
