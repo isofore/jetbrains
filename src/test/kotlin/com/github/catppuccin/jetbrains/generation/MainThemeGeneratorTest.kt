@@ -1,16 +1,17 @@
-package com.github.catppuccin.jetbrains
+package com.github.catppuccin.jetbrains.generation
 
 import com.catppuccin.Palette
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.readValue
+import com.github.catppuccin.jetbrains.options.CatppuccinOptions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
 class MainThemeGeneratorTest {
   private val writer = FakeFileWriter()
-  private val options = ThemeOptions(Palette.FRAPPE.mauve)
+  private val options = CatppuccinOptions()
   private val themeGenerator = MainThemeGenerator(options, writer)
   private val objectMapper = ObjectMapper().registerModule(KotlinModule())
 

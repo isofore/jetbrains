@@ -1,4 +1,4 @@
-package com.github.catppuccin.jetbrains
+package com.github.catppuccin.jetbrains.generation
 
 import java.awt.Color
 

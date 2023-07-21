@@ -1,4 +1,4 @@
-package com.github.catppuccin.jetbrains
+package com.github.catppuccin.jetbrains.generation
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonInclude

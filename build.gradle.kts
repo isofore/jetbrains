@@ -32,7 +32,9 @@ kotlin {
 
 dependencies {
   implementation("com.catppuccin:catppuccin-palette:1.0.0")
-  implementation("com.github.jknack:handlebars:4.3.1")
+  implementation("com.github.jknack:handlebars:4.3.1") {
+    exclude("org.slf4j", "slf4j-api")
+  }
   testImplementation(kotlin("test"))
 }
 

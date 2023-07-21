@@ -1,16 +1,20 @@
-package com.github.catppuccin.jetbrains
+package com.github.catppuccin.jetbrains.generation
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import java.io.File
+import java.net.URI
 import java.nio.file.Files
 import java.nio.file.Path
 
 interface FileWriter {
   fun write(name: String, text: String): File
-  fun write(name: String, data: Any): File
+  fun writeAny(name: String, data: Any): File
 }
 
-class DefaultFileWriter(private val dirPath: String) : FileWriter {
+class DefaultFileWriter(
+  private val dirPath: URI = object {}::class.java.getResource("/themes")?.toURI()
+    ?: URI("src/main/resources/themes")
+) : FileWriter {
   private val objectMapper = ObjectMapper()
 
   private val parentDir: File
@@ -19,13 +23,13 @@ class DefaultFileWriter(private val dirPath: String) : FileWriter {
     parentDir = ensureParentDirExists()
   }
 
-  override fun write(name: String, data: Any): File =
-    File(dirPath, name).let { file ->
+  override fun writeAny(name: String, data: Any): File =
+    File(parentDir, name).let { file ->
       objectMapper.writeValue(file, data)
       file
     }
 
-  override fun write(name: String, text: String): File = File(dirPath, name).let { file ->
+  override fun write(name: String, text: String): File = File(parentDir, name).let { file ->
     file.writeText(text)
     file
   }

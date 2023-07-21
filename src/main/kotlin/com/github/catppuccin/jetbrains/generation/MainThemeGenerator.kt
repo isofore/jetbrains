@@ -1,15 +1,16 @@
-package com.github.catppuccin.jetbrains
+package com.github.catppuccin.jetbrains.generation
 
 import com.catppuccin.Flavour
 import com.catppuccin.Palette
+import com.github.catppuccin.jetbrains.options.CatppuccinOptions
 import java.awt.Color
 
 class MainThemeGenerator(
-  override val options: ThemeOptions,
-  private val fileWriter: FileWriter = DefaultFileWriter("src/main/resources/themes")
+  override val options: CatppuccinOptions = CatppuccinOptions.instance.state,
+  private val fileWriter: FileWriter = DefaultFileWriter()
 ) : ThemeGenerator<JBTheme> {
-  override fun write(generateResult: List<JBTheme>) = generateResult.forEach { (key, theme) ->
-    fileWriter.write("$key.theme.json", theme)
+  override fun write(generateResult: List<JBTheme>) = generateResult.forEach { theme ->
+    fileWriter.writeAny("${theme.key}.theme.json", theme)
   }
 
   override fun generate(flavours: List<Flavour>): List<JBTheme> =
@@ -18,7 +19,10 @@ class MainThemeGenerator(
   fun toTheme(flavour: Flavour): JBTheme {
     val isLatte = flavour == Palette.LATTE
 
+    val colorMap: Map<String, Color> = flavour.toList().associate { it.key to it.value }
     val colors: Map<String, String> = flavour.toList().associate { it.key to it.value.toHex() }
+
+    val accentColor = colorMap[options.accentColor.value]?.toHex() ?: flavour.mauve.toHex()
 
     return JBTheme(
       key = flavour.name,
@@ -27,7 +31,7 @@ class MainThemeGenerator(
       author = "Catppuccin Org <releases@catppuccin.com>",
       editorScheme = "/themes/${flavour.name}.xml",
       colors = colors + mapOf(
-        "accentColor" to flavour.mauve.toHex(),
+        "accentColor" to accentColor,
         "secondaryAccentColor" to flavour.yellow.toHex(),
         "primaryForeground" to flavour.text.toHex(),
         "primaryBackground" to flavour.base.toHex(),

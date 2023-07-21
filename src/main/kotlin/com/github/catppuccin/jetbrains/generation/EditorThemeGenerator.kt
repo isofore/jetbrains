@@ -1,7 +1,8 @@
-package com.github.catppuccin.jetbrains
+package com.github.catppuccin.jetbrains.generation
 
 import com.catppuccin.Flavour
 import com.catppuccin.Palette
+import com.github.catppuccin.jetbrains.options.CatppuccinOptions
 import com.github.jknack.handlebars.Handlebars
 import com.github.jknack.handlebars.Options
 import com.github.jknack.handlebars.Template
@@ -9,8 +10,8 @@ import com.github.jknack.handlebars.io.ClassPathTemplateLoader
 import java.awt.Color
 
 class EditorThemeGenerator(
-  override val options: ThemeOptions,
-  private val fileWriter: FileWriter = DefaultFileWriter("src/main/resources/themes")
+  override val options: CatppuccinOptions = CatppuccinOptions.instance,
+  private val fileWriter: FileWriter = DefaultFileWriter()
 ) : ThemeGenerator<EditorThemeContext> {
   private val template: Template
 

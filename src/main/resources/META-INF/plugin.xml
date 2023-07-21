@@ -59,5 +59,12 @@ For further help, see also:
     <bundledColorScheme path="/themes/frappe-no-italics"/>
     <bundledColorScheme path="/themes/macchiato-no-italics"/>
     <bundledColorScheme path="/themes/mocha-no-italics"/>
+
+    <applicationConfigurable
+      instance="com.github.catppuccin.jetbrains.options.CatppuccinConfigurable"
+      id="com.github.catppuccin.jetbrains.options.CatppuccinConfigurable"
+      displayName="Catppuccin"
+    />
+    <applicationService serviceImplementation="com.github.catppuccin.jetbrains.options.CatppuccinOptions"/>
   </extensions>
 </idea-plugin>

@@ -1,4 +1,4 @@
-package com.github.catppuccin.jetbrains
+package com.github.catppuccin.jetbrains.generation
 
 import java.io.File
 
@@ -10,7 +10,7 @@ class FakeFileWriter : FileWriter {
     return File.createTempFile("test", null)
   }
 
-  override fun write(name: String, data: Any): File {
+  override fun writeAny(name: String, data: Any): File {
     files[name] = ""
     return File.createTempFile("test", null)
   }

@@ -1,13 +1,14 @@
-package com.github.catppuccin.jetbrains
+package com.github.catppuccin.jetbrains.generation
 
 import com.catppuccin.Palette
+import com.github.catppuccin.jetbrains.options.CatppuccinOptions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
 class EditorThemeGeneratorTest {
   private val writer = FakeFileWriter()
-  private val options = ThemeOptions(Palette.FRAPPE.mauve)
+  private val options = CatppuccinOptions()
   private val themeGenerator = EditorThemeGenerator(options, writer)
 
   private val frappeTheme = writer.readResource("/themes/frappe.xml")
